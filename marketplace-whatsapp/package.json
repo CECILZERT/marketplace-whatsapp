@@ -1,8 +1,7 @@
 {
-  "name": "mon-site-react",
+  "name": "marketplace-whatsapp",
   "version": "1.0.0",
   "private": true,
-  "homepage": "https://<ton-nom-utilisateur>.github.io/mon-site-react",
   "dependencies": {
     "lucide-react": "^0.344.0",
     "react": "^18.3.1",
@@ -13,14 +12,11 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "eject": "react-scripts eject"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.17",
     "postcss": "^8.4.33",
-    "tailwindcss": "^3.4.3",
-    "gh-pages": "^6.1.0"
+    "tailwindcss": "^3.4.3"
   }
 }
