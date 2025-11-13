@@ -1,34 +1,16 @@
-# ================================================================
-# 🏗️ ÉTAPE 1 : Construire l’application React
-# ================================================================
-FROM node:18 AS build
+# Étape 1 : construire le projet
+FROM node:18-alpine as build
 
-# Créer un dossier de travail
 WORKDIR /app
-
-# Copier les fichiers nécessaires pour installer les dépendances
 COPY package*.json ./
-
-# Installer les dépendances
 RUN npm install
-
-# Copier tout le reste du projet dans l’image Docker
 COPY . .
-
-# Construire l’application pour la production
 RUN npm run build
 
-
-# ================================================================
-# 🚀 ÉTAPE 2 : Servir l’application avec Nginx
-# ================================================================
-FROM nginx:stable-alpine
-
-# Copier le build généré depuis l’étape précédente vers le dossier de Nginx
+# Étape 2 : servir le site avec un serveur web léger
+FROM nginx:alpine
 COPY --from=build /app/build /usr/share/nginx/html
 
-# Exposer le port 80 (port HTTP par défaut)
+# Démarre automatiquement Nginx
 EXPOSE 80
-
-# Lancer Nginx en mode "foreground"
 CMD ["nginx", "-g", "daemon off;"]
