@@ -1,0 +1,30 @@
+# Étape 1 : construire l'application
+FROM node:18 AS build
+
+# Définir le répertoire de travail
+WORKDIR /app
+
+# Copier les fichiers du projet
+COPY package*.json ./
+COPY yarn.lock ./
+
+# Installer les dépendances
+RUN yarn install --frozen-lockfile || npm install
+
+# Copier le reste des fichiers
+COPY . .
+
+# Construire l’application
+RUN yarn build || npm run build
+
+# Étape 2 : servir les fichiers statiques avec nginx
+FROM nginx:stable-alpine
+
+# Copier le build de React dans le dossier nginx
+COPY --from=build /app/build /usr/share/nginx/html
+
+# Exposer le port 80
+EXPOSE 80
+
+# Lancer nginx
+CMD ["nginx", "-g", "daemon off;"]
