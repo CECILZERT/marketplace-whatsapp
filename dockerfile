@@ -1,4 +1,4 @@
-# Étape 1 : construire le projet
+# Étape 1 : construction du projet React
 FROM node:18-alpine as build
 
 WORKDIR /app
@@ -7,10 +7,12 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-# Étape 2 : servir le site avec un serveur web léger
+# Étape 2 : servir le site avec Nginx
 FROM nginx:alpine
 COPY --from=build /app/build /usr/share/nginx/html
 
-# Démarre automatiquement Nginx
+# Port exposé
 EXPOSE 80
+
+# Démarre Nginx
 CMD ["nginx", "-g", "daemon off;"]
